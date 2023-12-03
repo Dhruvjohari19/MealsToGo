@@ -84,7 +84,7 @@ export default function App() {
       </NavigationContainer>
       <StatusBar style="auto" />
     </ThemeProvider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({});
