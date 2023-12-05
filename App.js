@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { restaurantRequest } from "./src/services/restaurants/restaurantService";
+import restaurantService from "./src/services/restaurants/restaurantService"
 
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +43,7 @@ export default function App() {
       </View>
     );
   }
+
   const TAB_ICON = {
     Restaurants: "md-restaurant",
     Maps: "md-map",
@@ -78,13 +79,14 @@ export default function App() {
           <Tab.Screen name="Restaurants" component={HomeScreen} />
           <Tab.Screen name="Maps" component={Maps} />
           <Tab.Screen name="Settings" component={Settings} />
+          <Tab.Screen name="restaurantService" component={restaurantService} />
+         
         </Tab.Navigator>
 
         <StatusBar style="auto" />
       </NavigationContainer>
-      <StatusBar style="auto" />
     </ThemeProvider>
-  )
+  );
 }
 
 const styles = StyleSheet.create({});

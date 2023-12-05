@@ -1,23 +1,17 @@
-
-import {mocks} from "./mock"
-
-export const restaurantRequest = (location="37.7749295,-122.4194155")=>{
-// console.log(mocks[location])
-
-   return new Promise((resolve,reject)=>{
-    const mock = mocks[location]
-
-    if(!mocks){ reject
-      ("Not found");
+import { mocks } from "./mock";
+export const restaurantService = (location = "37.7749295,-122.4194155") => {
+  return new Promise((resolve, reject) => {
+    const mock = mocks[location];
+    if (!mock) {
+      reject("not found");
     }
-    resolve(mock).then((result) =>{
-        console.log(result)
-    })
-    
-   })
-
-
-
-}
-
-restaurantRequest();
+    resolve(mock);
+  });
+};
+restaurantService()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log("error");
+  });
