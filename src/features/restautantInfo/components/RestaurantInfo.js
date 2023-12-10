@@ -40,7 +40,8 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
             paddingBottom: 2,
             padding: 16,
           }}
-        >
+        > 
+         
           {ratingArray.map(() => (
             <SvgXml xml={star} width={25} height={25} />
           ))}
@@ -49,11 +50,16 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
               Closed Temporary
             </Text>
           )}
+
           {isOpenNow && <SvgXml xml={open} width={25} height={25} />}
+
           <View>
             <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
           </View>
+
         </View>
+
+        
         <Text style={styles.address}>{address}</Text>
       </Card>
     </>

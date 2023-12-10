@@ -12,7 +12,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import restaurantService from "./src/services/restaurants/restaurantService"
+import restaurantService from "./src/services/restaurants/restaurantService";
+import { RestaurantContextProvider } from "./src/services/restaurants/restaurant.Context";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -60,32 +62,27 @@ export default function App() {
   };
 
   return (
-    // <View>
-    //   <ThemeProvider theme={theme}>
-    //     <HomeScreen />
-    //         </ThemeProvider>
-    //   <StatusBar style="auto" />
-    //   </View>
-
-    <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={createScreenOptions}
-          tabBarOptions={{
-            activeTintColor: "#42648f",
-            inactiveTintColor: "gray",
-          }}
-        >
-          <Tab.Screen name="Restaurants" component={HomeScreen} />
-          <Tab.Screen name="Maps" component={Maps} />
-          <Tab.Screen name="Settings" component={Settings} />
-          {/* <Tab.Screen name="restaurantService" component={restaurantService} /> */}
-         
-        </Tab.Navigator>
-
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </ThemeProvider>
+      <>
+      <ThemeProvider theme={theme}>
+       <RestaurantContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={createScreenOptions}
+              tabBarOptions={{
+                activeTintColor: "#42648f",
+                inactiveTintColor: "gray",
+              }}
+            >
+              <Tab.Screen name="Restaurants" component={HomeScreen} />
+              <Tab.Screen name="Maps" component={Maps} />
+              <Tab.Screen name="Settings" component={Settings} />
+            </Tab.Navigator>
+          </NavigationContainer>
+          </RestaurantContextProvider>
+       
+      </ThemeProvider>
+      <StatusBar style="auto" />
+    </>
   );
 }
 

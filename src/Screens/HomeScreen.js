@@ -7,52 +7,40 @@ import {
   StatusBar,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { Searchbar } from "react-native-paper";
 import { RestaurantInfo } from "../features/restautantInfo/components/RestaurantInfo";
+import { RestaurantContext } from "../services/restaurants/restaurant.Context";
+
 
 const HomeScreen = () => {
   const isAndroid = Platform.OS === "android";
-  const [searchQuery, setSearchQuery] = React.useState("");
+  // const [searchQuery, setSearchQuery] = React.useState("");
+  // const onChangeSearch = (query) => setSearchQuery(query);
 
-  const onChangeSearch = (query) => setSearchQuery(query);
+  const { restaurants, loading, error } = useContext(RestaurantContext);
+  console.log(error,"error dkho")
+
   return (
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.search}>
           <Searchbar
             placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
+            // onChangeText={onChangeSearch}
+            // value={searchQuery}
           />
         </View>
         <View style={styles.list}>
-          {/* <RestaurantInfo /> */}
-          <FlatList
-      data={[
-        { name: 1 },
-        { name: 2 },
-        { name: 3 },
-        { name: 4 },
-        { name: 5 },
-        { name: 6 },
-        { name: 7 },
-        { name: 8 },
-        { name: 9 },
-        { name: 10 },
-        { name: 11 },
-        { name: 12 },
-        { name: 13 },
-        { name: 14 },
-      ]}
-      renderItem={() => (
-        
-          <RestaurantInfo />
-  
-      )}
-      keyExtractor={(item) => item.name}
-      contentContainerStyle={{ padding: 16 }}
-    />
+        <FlatList
+          data={restaurants}
+          renderItem={({ item }) => {
+            console.log(item, "item arre ke naa");
+            return <RestaurantInfo restaurant={item} />;
+          }}
+          keyExtractor={(item) => item.name}
+          contentContainerStyle={{ padding: 16 }}
+        />
         </View>
       </SafeAreaView>
     </>
