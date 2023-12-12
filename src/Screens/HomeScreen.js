@@ -8,34 +8,26 @@ import {
   FlatList,
 } from "react-native";
 import React, { useContext } from "react";
-import { Searchbar } from "react-native-paper";
+import {SearchComponent} from "../features/restautantInfo/components/SearchComponent";
 import { RestaurantInfo } from "../features/restautantInfo/components/RestaurantInfo";
 import { RestaurantContext } from "../services/restaurants/restaurant.Context";
 
 
+
 const HomeScreen = () => {
   const isAndroid = Platform.OS === "android";
-  // const [searchQuery, setSearchQuery] = React.useState("");
-  // const onChangeSearch = (query) => setSearchQuery(query);
-
   const { restaurants, loading, error } = useContext(RestaurantContext);
-  console.log(error,"error dkho")
+  // console.log(error,"error dkho")
 
-  return (
+  return ( 
     <>
       <SafeAreaView style={styles.container}>
-        <View style={styles.search}>
-          <Searchbar
-            placeholder="Search"
-            // onChangeText={onChangeSearch}
-            // value={searchQuery}
-          />
-        </View>
+        <SearchComponent />
         <View style={styles.list}>
         <FlatList
           data={restaurants}
           renderItem={({ item }) => {
-            console.log(item, "item arre ke naa");
+            // console.log(item, "item arre ke naa");
             return <RestaurantInfo restaurant={item} />;
           }}
           keyExtractor={(item) => item.name}

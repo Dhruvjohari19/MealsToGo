@@ -1,9 +1,9 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { restaurantTransform } from "./restaurantService";
 import { restaurantService } from "./restaurantService";
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { LocationContext } from "../location/location.context";
 
 export const RestaurantContext = createContext();
 
@@ -11,36 +11,42 @@ export const RestaurantContextProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { location } = useContext(LocationContext);
 
-
- 
-
-  const retrieveRestaurants = () => {
+  const retrieveRestaurants = (loc) => {
     setIsLoading(true);
+    setRestaurants([]);
+
     setTimeout(() => {
-      restaurantService().then(restaurantTransform).then((results) => {
-          console.log(results, "Poonam resultd ")
+      restaurantService(loc)
+        .then(restaurantTransform)
+        .then((results) => {
+          // console.log(results,"resultssss")
           setIsLoading(false);
           setRestaurants(results);
         })
         .catch((err) => {
-          console.log(err, "error dkho")
           setIsLoading(false);
-         
           setError(err);
         });
-    },2000);
+    }, 2000);
   };
-
   useEffect(() => {
-    retrieveRestaurants();
+    if (location) {
+      const locationString = `${location.lat},${location.lng}`;
+      retrieveRestaurants(locationString);
+      console.log(locationString, "locationString");
+    }
   }, []);
-  console.log("Providing data:", restaurants );
 
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator  size={"large"} animating={true} color={MD2Colors.red800} />
+        <ActivityIndicator
+          size={"large"}
+          animating={true}
+          color={MD2Colors.red800}
+        />
       </View>
     );
   }
@@ -60,7 +66,7 @@ export const RestaurantContextProvider = ({ children }) => {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

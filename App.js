@@ -11,10 +11,8 @@ import { useFonts as useLato, lato_400Regular } from "@expo-google-fonts/lato";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import restaurantService from "./src/services/restaurants/restaurantService";
 import { RestaurantContextProvider } from "./src/services/restaurants/restaurant.Context";
-
+import { LocationContextProvider } from "./src/services/location/location.context";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,24 +60,25 @@ export default function App() {
   };
 
   return (
-      <>
+    <>
       <ThemeProvider theme={theme}>
-       <RestaurantContextProvider>
-          <NavigationContainer>
-            <Tab.Navigator
-              screenOptions={createScreenOptions}
-              tabBarOptions={{
-                activeTintColor: "#42648f",
-                inactiveTintColor: "gray",
-              }}
-            >
-              <Tab.Screen name="Restaurants" component={HomeScreen} />
-              <Tab.Screen name="Maps" component={Maps} />
-              <Tab.Screen name="Settings" component={Settings} />
-            </Tab.Navigator>
-          </NavigationContainer>
+        <LocationContextProvider>
+          <RestaurantContextProvider>
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={createScreenOptions}
+                tabBarOptions={{
+                  activeTintColor: "#42648f",
+                  inactiveTintColor: "gray",
+                }}
+              >
+                <Tab.Screen name="Restaurants" component={HomeScreen} />
+                <Tab.Screen name="Maps" component={Maps} />
+                <Tab.Screen name="Settings" component={Settings} />
+              </Tab.Navigator>
+            </NavigationContainer>
           </RestaurantContextProvider>
-       
+        </LocationContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>
