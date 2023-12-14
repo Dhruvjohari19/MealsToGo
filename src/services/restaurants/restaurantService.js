@@ -8,8 +8,7 @@ export const restaurantService = (location) => {
       reject("not found");
     } else {
       resolve(mock);
-      console.log("Mock data:", mocks);
-    }
+       }
   });
 };
 
@@ -18,21 +17,21 @@ export const restaurantService = (location) => {
 // whole project...
 
 export const restaurantTransform = ({ results = [] }) => {
-  console.log("Transforming data:", results);
+  
   const mappedResult = results.map((restaurant) => {
     restaurant.photos = restaurant.photos.map((p) => {
       return mockImages[Math.ceil(Math.random() * (mockImages.length - 1))];
+
     });
     return {
       ...restaurant,
-      address: address.vicinity,
+      address: restaurant.vicinity,
       isOpenNow: restaurant.opening_hours && restaurant.opening_hours.open_now,
       isClosedTemporarily: restaurant.business_status === "CLOSED_TEMPORARILY",
+      
     };
   });
-  // console.log(mappedResult, "mappedResult");
  
-
   return camelize(mappedResult);
   
 };

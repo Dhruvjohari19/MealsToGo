@@ -10,13 +10,13 @@ import {
 import React, { useContext } from "react";
 import {SearchComponent} from "../features/restautantInfo/components/SearchComponent";
 import { RestaurantInfo } from "../features/restautantInfo/components/RestaurantInfo";
-import { RestaurantContext } from "../services/restaurants/restaurant.Context";
+import { RestaurantsContext } from "../services/restaurants/restaurant.Context";
 
 
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
   const isAndroid = Platform.OS === "android";
-  const { restaurants, loading, error } = useContext(RestaurantContext);
+  const { restaurants, loading, error } = useContext(RestaurantsContext);
   // console.log(error,"error dkho")
 
   return ( 
@@ -39,7 +39,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+// export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -58,3 +58,5 @@ const styles = StyleSheet.create({
     height: 900,
   },
 });
+
+

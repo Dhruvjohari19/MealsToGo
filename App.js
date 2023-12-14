@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import HomeScreen from "./src/Screens/HomeScreen";
+import { HomeScreen } from "./src/Screens/HomeScreen";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme/index";
 import {
@@ -11,8 +11,9 @@ import { useFonts as useLato, lato_400Regular } from "@expo-google-fonts/lato";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { RestaurantContextProvider } from "./src/services/restaurants/restaurant.Context";
+import { RestaurantsContextProvider } from "./src/services/restaurants/restaurant.Context";
 import { LocationContextProvider } from "./src/services/location/location.context";
+import { Navigation } from "./src/infrastructure/navigation/app.navigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -59,25 +60,27 @@ export default function App() {
     };
   };
 
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <LocationContextProvider>
-          <RestaurantContextProvider>
+        <RestaurantsContextProvider>
+            {/* <Navigation/> */}
             <NavigationContainer>
               <Tab.Navigator
-                screenOptions={createScreenOptions}
+                 screenOptions={createScreenOptions}
                 tabBarOptions={{
                   activeTintColor: "#42648f",
                   inactiveTintColor: "gray",
                 }}
               >
-                <Tab.Screen name="Restaurants" component={HomeScreen} />
+                <Tab.Screen name="Restaurants" component={HomeScreen} /> 
                 <Tab.Screen name="Maps" component={Maps} />
                 <Tab.Screen name="Settings" component={Settings} />
               </Tab.Navigator>
             </NavigationContainer>
-          </RestaurantContextProvider>
+            </RestaurantsContextProvider>
         </LocationContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
@@ -86,3 +89,5 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({});
+
+
